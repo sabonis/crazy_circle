@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <style>
+      #content {
+        width: 200px;
+        height: 200px;
+        border: 1px solid black;
+        /*display: flex;
+        justify-content: center;
+        align-items: center;*/
+        position: relative;
+        display: inline-block;
+      }
+
+      .bar {
+        top: 100px;
+        left: 0;
+        position: absolute;
+        background: black;
+        width: 200px;
+        height: 1px;
+        display: inline-block;
+        /*animation: roate 5s 0s infinite linear;*/
+      }
+      .bar2 {
+        top: 100px;
+        left: 0;
+        position: absolute;
+        width: 200px;
+        height: 1px;
+        display: inline-block;
+        /*animation: roate 5s 0s infinite linear;*/
+      }
+
+      .box {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: red;
+        display: inline-block;
+        border-radius: 100%;
+        top: -5px;
+        /*animation: moveBox 5s 0s infinite linear;*/
+      }
+
+      @keyframes moveBox {
+        0% {
+          left: 0px;
+        }
+
+        50% {
+          left: 190px;
+        }
+
+        100% {
+          left: 0px;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id='content'></div>
+    <script src='http://code.jquery.com/jquery-1.12.2.min.js'></script>
+    <script src='jquery.keyframes.min.js'></script>
+    <script>
+      $(function() {
+        var j = 0;
+        var x = 1;
+        function getRandom(min, max) {
+          return Math.floor(Math.random()*(max-min+1))+min;
+        }
+
+        function generateBars() {
+          if (j > 7) return;
+          var content = $('#content');
+
+            var bar = $("<div id='bar-"+j+"' class='bar'></div>");
+            var box = $("<div id='box-"+j+"' class='box'></div>");
+            $.keyframe.define([
+              {
+                name: 'roate' + j,
+                '0%': {transform: 'rotateZ('+0 +'deg)'},
+                '100%': {transform: 'rotateZ('+360+'deg)'}
+              },
+              // {
+              //   name: 'moveBox' + i,
+              //   '0%': { left: (0+i*10)+'px' },
+              //   '12.5%': { left: (0+i*10)+'px' },
+              //   '25%': { left: (100-i*10)+'px' },
+              //   '37.5%': { left: (0+i*10)+'px' },
+              //   '50%': { left: (200+i*10)+'px' },
+              //   '62.5%': { left: (0+i*10)+'px' },
+              //   '75%': { left: (100+i*10)+'px' },
+              //   '87.5%': { left: (0+i*10)+'px' },
+              //   '100%': { left: (0+i*10)+'px' }
+              // },
+            ]);
+            bar.css({'animation': "roate"+j + " "+ 5*x + "s 0s infinite linear"});
+            // bar.css({transform: 'rotateZ('+j*22.5+'deg)'});
+            box.css({animation: 'moveBox '+ 5*x +'s 0s infinite ease-in-out'});
+
+            content.append(bar);
+            bar.append(box);
+          j++;
+        }
+
+        setInterval(generateBars, 312.5*x)
+
+        // generateBars();
+      });
+    </script>
+  </body>
+
+</html>
